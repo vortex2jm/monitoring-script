@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if wget localhost:3333/api/courses; then 
+  echo "Api pronta! Conectando..."
+  exit 0
+else
+  echo "A api ainda não está pronta!"
+  exit 1
+fi

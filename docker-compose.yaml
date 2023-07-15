@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  api: 
+    image: kevincarvalhodejesus/classroom-go-api
+    container_name: monitoring-classroom-api
+    ports:
+      - 5003:5003
+      - 3333:3333
+    volumes:
+      - ./credentials.json:/api/credentials.json
+      - ./classroom-monitor-golang/health_test:/api/health_test
+    healthcheck:
+      test: ["CMD", "sh", "health_test"]
+      interval: 3s
+      timeout: 5s
+      retries: 15
+    tty: true
+
+  script:
+    build: ./monitoring-spreadsheet-script
+    container_name: monitoring-sheets-api
+    tty: true
+    stdin_open: true
+    network_mode: host
+    volumes:
+      - ./credentials.json:/app/credentials.json
+    depends_on:
+      api:
+        condition: service_healthy
