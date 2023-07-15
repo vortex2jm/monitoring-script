@@ -11,5 +11,3 @@ api:
 
 clean:
 	@ docker-compose down
-	@ docker rmi -f integration-script
-	@ docker rmi kevincarvalhodejesus/classroom-go-api
